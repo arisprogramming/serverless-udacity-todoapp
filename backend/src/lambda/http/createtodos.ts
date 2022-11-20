@@ -1,5 +1,5 @@
 import 'source-map-support/register'
-import {createtodo} from "../../businessLogics/Todo";
+import {createtodo} from "../../BusinessLogics/Todo";
 import {createtodoRequest} from '../../requests/CreatetodoRequests';
 import {APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult} from 'aws-lambda'
 

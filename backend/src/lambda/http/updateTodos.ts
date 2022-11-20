@@ -1,7 +1,7 @@
 import {APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult} from 'aws-lambda'
 import 'source-map-support/register'
 import {UpdatetodoRequest} from '../../requests/UpdatetodoRequests'
-import {updatetodo} from "../../businessLogics/Todo"
+import {updatetodo} from "../../BusinessLogics/Todo"
 
 
 export const handler: APIGatewayProxyHandler = async (

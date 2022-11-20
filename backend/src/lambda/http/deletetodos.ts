@@ -3,7 +3,7 @@
 // Ceci est le scrpit de suppressiond des tâches
 import 'source-map-support/register'
 import {APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler} from 'aws-lambda';
-import {deletetodo} from "../../businessLogics/Todo";
+import {deletetodo} from "../../BusinessLogics/Todo";
 
 
 
