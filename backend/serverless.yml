@@ -1,8 +1,8 @@
-# TODO: Change the name of the org 
-org: aristido
+
+org: aristido 
 app: serverless-todo-app
 service: serverless-todo-app
-
+# Ceci concerne le nom de mon 
 plugins:
   - serverless-webpack
   - serverless-iam-roles-per-function
@@ -35,9 +35,9 @@ custom:
   documentation:
     api:
       info:
-        version: '1.0.0'
-        title: serverless-api
-        description: serverless-api
+        version: '2.0.0'
+        title: serverless-api-prod
+        description: serverless-api-prod
     models:
       - name: CreateTodoRequest
         contentType: "application/json"
@@ -47,11 +47,11 @@ custom:
             - dueDate
           properties:
             name:
-              minLength: 1
+              minLength: 2
               type: string
             dueDate:
               type: string
-      - name: UpdateTodoRequest
+      - name: UpdatetodoRequest
         contentType: "application/json"
         schema:
           required:
@@ -60,7 +60,7 @@ custom:
             - done
           properties:
             name:
-              minLength: 1
+              minLength: 2
               type: string
             dueDate:
               type: string
@@ -72,7 +72,7 @@ functions:
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
 
-  # Gettodos functions
+  # Les fonctions pour avoir les taches à faire
   GetTodos:
     handler: src/lambda/http/getTodos.handler
     events:
@@ -93,7 +93,7 @@ functions:
         Resource: 
           - '*'
 
-  # TODO: Create a new Item 
+  # Creation of a new Todo module / Création d'une nouvelle tâche
   CreateTodo:
     handler: src/lambda/http/createTodo.handler
     events:
@@ -102,6 +102,7 @@ functions:
           path: todos
           cors: true
           authorizer: Auth
+          reqValidatorName: RequestBodyValidator
           documentation:
             summary: "Create a new todo item"
             description: "Create a new todo item"
@@ -120,7 +121,7 @@ functions:
         Resource: 
           - '*'
 
-  # TODO: Update an item
+  # Update of a Todo item/Mise à jour de la tâche à éffectuer
   UpdateTodo:
     handler: src/lambda/http/updateTodo.handler
     events:
@@ -130,10 +131,10 @@ functions:
           cors: true
           authorizer: Auth
           documentation:
-            summary: "Update a todo item"
-            description: "Update a todo item"
+            summary: "Update a freshnew todo module"
+            description: "Update a freshnew module"
             requestModels:
-              "application/json": UpdateTodoRequest
+              "application/json": UpdatetodoRequest
           reqValidatorName: RequestBodyValidator
     iamRoleStatementsName: ${self:provider.environment.PROJECT_NAME}-update-todo-role-${self:provider.stage}
     iamRoleStatements:
@@ -146,8 +147,11 @@ functions:
           - xray:PutTraceSegments
         Resource: 
           - '*'
-
-  # TODO: delete item
+ 
+ 
+ 
+ # Delete the todo task/ Suppressiond de la tâche faire
+ 
   DeleteTodo:
     handler: src/lambda/http/deleteTodo.handler
     events:
@@ -168,7 +172,7 @@ functions:
         Resource: 
           - '*'
 
-  # TODO: Generate uploadUrl
+  # 
   GenerateUploadUrl:
     handler: src/lambda/http/generateUploadUrl.handler
     events:
@@ -193,14 +197,14 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: userId
+          - AttributeName: userID
             AttributeType: S
-          - AttributeName: todoId
+          - AttributeName: todoID
             AttributeType: S
         KeySchema:
-          - AttributeName: userId
+          - AttributeName: userID
             KeyType: HASH
-          - AttributeName: todoId
+          - AttributeName: todoID
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:provider.environment.TODOS_TABLE}
@@ -228,7 +232,7 @@ resources:
                 - POST
                 - DELETE
                 - HEAD
-              MaxAge: 300
+              MaxAge: 400
    
     RequestBodyValidator:
       Type: AWS::ApiGateway::RequestValidator
